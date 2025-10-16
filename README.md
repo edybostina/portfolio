@@ -5,7 +5,7 @@ This repository contains my personal portfolio website.
 ## Live Demo
 
 Check out the live version here:  
-[https://edybostina.github.io/portofolio/](https://edybostina.github.io/portofolio/)
+[https://edybostina.github.io/portofolio/](https://edybostina.github.io/portfolio/)
 
 ## Features
 
