@@ -10,20 +10,19 @@ const projects = [
 
 export default function Projects(){
   return (
-    <section id="projects" className="card">
-      <h2>Projects 🗂️</h2>
-      <div className="projects-list">
+    <section id="projects" className="card" aria-labelledby="projects-heading">
+      <h2 id="projects-heading">Projects 🗂️</h2>
+      <div className="projects-list" role="list">
         {projects.map(p => (
-          <article className="project" key={p.title}>
+          <article className="project" key={p.title} role="listitem">
             <div className="project-info">
               <div className="project-title">{p.emoji} {p.title}</div>
               <div className="small">{p.desc}</div>
             </div>
-            <a href={p.link} className="navlink">view ↗</a>
+            <a href={p.link} className="navlink" target={p.link.startsWith('http') ? '_blank' : '_self'} rel={p.link.startsWith('http') ? 'noopener noreferrer' : ''} aria-label={`View ${p.title} project`}>view ↗</a>
           </article>
         ))}
       </div>
-      <p className="small"></p>
     </section>
   )
 }

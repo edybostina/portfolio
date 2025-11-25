@@ -4,7 +4,7 @@ export default function Footer(){
   return (
     <footer className="footer">
       <div>© {new Date().getFullYear()} Eduard Bostina</div>
-      <div className="small">Made with text, emojis, and a sprinkle of 2000s ✨</div>
+      <div className="small">I am not a web dev, so please bear with me.</div>
     </footer>
   )
 }
