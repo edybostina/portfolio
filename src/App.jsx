@@ -4,10 +4,13 @@ import Projects from './components/Projects'
 import About from './components/About'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
+import ThemeToggle from './components/ThemeToggle'
+import ScrollToTop from './components/ScrollToTop'
 
 export default function App() {
   return (
     <div className="page">
+      <ThemeToggle />
       <Header />
       <main className="content" role="main">
         <section id="home" className="card" aria-labelledby="home-heading">
@@ -24,6 +27,7 @@ export default function App() {
         <Contact />
       </main>
       <Footer />
+      <ScrollToTop />
     </div>
   )
 }

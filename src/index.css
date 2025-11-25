@@ -6,11 +6,19 @@
   --border: #c8c8c8;
 }
 
+[data-theme="dark"] {
+  --bg: #1a1a1a;
+  --panel: #2a2a2a;
+  --accent: #4da6ff;
+  --muted: #cccccc;
+  --border: #444444;
+}
+
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-html,body,#root { height: 100%; margin: 0; font-family: 'Courier New', monospace; background: var(--bg); color: var(--muted); }
+html,body,#root { height: 100%; margin: 0; font-family: 'Courier New', monospace; background: var(--bg); color: var(--muted); transition: background 0.3s ease, color 0.3s ease; }
 
-.page { max-width: 880px; margin: 24px auto; padding: 18px; background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.95)); border: 3px double var(--border); }
+.page { max-width: 880px; margin: 24px auto; padding: 18px; background: var(--panel); border: 3px double var(--border); position: relative; transition: background 0.3s ease, border-color 0.3s ease; }
 
 .header {
   display:flex;
@@ -232,5 +240,198 @@ a.contact-link code {
   
   p {
     font-size: 14px;
+  }
+}
+
+/* Theme Toggle */
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 48px;
+  height: 48px;
+  border: 2px solid var(--border);
+  background: var(--panel);
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1);
+  border-color: var(--accent);
+}
+
+.theme-toggle:active {
+  transform: scale(0.95);
+}
+
+/* Scroll to Top Button */
+.scroll-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 48px;
+  height: 48px;
+  border: 2px solid var(--border);
+  background: var(--accent);
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 24px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.scroll-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.scroll-to-top:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+}
+
+.scroll-to-top:active {
+  transform: translateY(-2px);
+}
+
+/* Copy Button and Toast */
+.contact-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+}
+
+.copy-btn {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.copy-btn:hover {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
+.copy-btn:active {
+  transform: scale(0.95);
+}
+
+.copied-toast {
+  position: absolute;
+  left: 100%;
+  margin-left: 8px;
+  background: var(--accent);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  animation: fadeInOut 2s ease;
+}
+
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0; }
+  10%, 90% { opacity: 1; }
+}
+
+/* Skills Tags */
+.skills-section {
+  margin: 8px 0;
+}
+
+.skills-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.skill-tag {
+  display: inline-block;
+  padding: 4px 10px;
+  background: var(--accent);
+  color: white;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  transition: all 0.2s ease;
+  cursor: default;
+}
+
+.skill-tag:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 6px rgba(0,102,153,0.3);
+}
+
+/* Dark mode adjustments */
+[data-theme="dark"] .header {
+  background: rgba(42,42,42,0.98);
+}
+
+[data-theme="dark"] a.navlink:hover {
+  background: rgba(77,166,255,0.1);
+}
+
+[data-theme="dark"] .project {
+  background: var(--panel);
+}
+
+[data-theme="dark"] .small {
+  color: #aaa;
+}
+
+[data-theme="dark"] code {
+  background: #3a3a3a;
+  color: var(--muted);
+}
+
+[data-theme="dark"] img.avatar {
+  background: #3a3a3a;
+}
+
+@media (max-width: 768px) {
+  .theme-toggle {
+    top: 12px;
+    right: 12px;
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+  
+  .scroll-to-top {
+    bottom: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+  
+  .copied-toast {
+    position: static;
+    margin-left: 0;
+    margin-top: 4px;
+    display: block;
   }
 }
