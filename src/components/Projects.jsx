@@ -1,26 +1,51 @@
 import React from 'react'
 
 const projects = [
-  { title: 'Aegis', desc: 'Modern, cross-platform CLI for secure file encryption — built in C++17 with libsodium and zlib', emoji: '🔒', link: 'https://github.com/edybostina/aegis' },
-  { title: 'Matrix Library', desc: 'A simple and efficient header-only C++ template matrix class for educational and prototyping use.', emoji: '📊', link: 'https://github.com/edybostina/matrix-lib-cpp' },
-  { title: 'Rasterizer', desc: 'A software rasterizer written in modern C++ that transforms, clips, and rasterizes 3D models to a pixel buffer.', emoji: '🖼️', link: 'https://github.com/edybostina/rasterizer' },
-  { title: 'Mini GPT', desc: 'A scalable GPT-2 style language model training framework in Python with PyTorch.', emoji: '🤖', link: 'https://github.com/edybostina/mini-gpt' },
-  { title: 'Retro Portfolio', desc: 'A minimalist, retro-styled portfolio website built with React and Vite.', emoji: '🌐', link: '#' }
+  {
+    title: 'perspicua',
+    desc: '64-bit UNIX-like kernel for Raspberry Pi 4 (AArch64/Cortex-A72). SMP, virtual memory (39-bit, 4KB pages), framebuffer console. C, Assembly.',
+    link: 'https://github.com/perspicua/perspicua',
+  },
+  {
+    title: 'aegis',
+    desc: 'Cross-platform CLI for secure file encryption. C++17, libsodium (XChaCha20-Poly1305), zlib. Passphrases, keyfiles, recursive directory encryption.',
+    link: 'https://github.com/edybostina/aegis',
+  },
+  {
+    title: 'rasterizer',
+    desc: 'Real-time 3D software rasterizer. C++17, SDL2. Multithreaded. Texture mapping, .obj loading, custom math library.',
+    link: 'https://github.com/edybostina/rasterizer',
+  },
+  {
+    title: 'matrix-lib',
+    desc: 'Header-only C++17 matrix library. SIMD acceleration (AVX2/NEON), LU/QR decomposition, auto-parallelisation for large matrices.',
+    link: 'https://github.com/edybostina/matrix-lib-cpp',
+  },
+  {
+    title: 'mini-gpt',
+    desc: 'GPT-2 style language model training framework. Python, PyTorch. WIP.',
+    link: 'https://github.com/edybostina/mini-gpt',
+  },
 ]
 
-export default function Projects(){
+export default function Projects() {
   return (
-    <section id="projects" className="card" aria-labelledby="projects-heading">
-      <h2 id="projects-heading">Projects 🗂️</h2>
-      <div className="projects-list" role="list">
+    <section id="projects">
+      <div className="section-heading">Projects</div>
+      <div className="projects-list">
         {projects.map(p => (
-          <article className="project" key={p.title} role="listitem">
-            <div className="project-info">
-              <div className="project-title">{p.emoji} {p.title}</div>
-              <div className="small">{p.desc}</div>
-            </div>
-            <a href={p.link} className="navlink" target={p.link.startsWith('http') ? '_blank' : '_self'} rel={p.link.startsWith('http') ? 'noopener noreferrer' : ''} aria-label={`View ${p.title} project`}>view ↗</a>
-          </article>
+          <div className="project" key={p.title}>
+            <span className="project-title">{p.title}</span>
+            <span className="project-desc">{p.desc}</span>
+            <a
+              className="project-link"
+              href={p.link}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              [src]
+            </a>
+          </div>
         ))}
       </div>
     </section>

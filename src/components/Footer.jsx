@@ -1,10 +1,10 @@
 import React from 'react'
 
-export default function Footer(){
+export default function Footer() {
   return (
     <footer className="footer">
-      <div>© {new Date().getFullYear()} Eduard Bostina</div>
-      <div className="small">I am not a web dev, so please bear with me.</div>
+      <span>© {new Date().getFullYear()} Eduard Bostina</span>
+      <span>not a web dev, bear with me</span>
     </footer>
   )
 }

@@ -1,25 +1,34 @@
 import React from 'react'
 
-export default function About(){
-  return (
-    <section id="about" className="card" aria-labelledby="about-heading">
-      <h2 id="about-heading">About 🙋</h2>
-      <div style={{display:'flex', gap:12, alignItems:'center'}}>
-        <img className="avatar" src="pfp2.jpg" alt="Profile picture of Eduard Bostina" />
-        <div>
-          <p>I'm a C++ developer who loves bringing ideas to life through clean and efficient code. I enjoy solving challenging problems and learning new ways to make my projects faster and smarter.</p>
-          <p>When I'm not coding, you'll probably find me playing guitar, watching football, or hanging out with friends. I'm a people person at heart, always up for meeting new people, sharing ideas, and learning from others.</p>
-          <div className="skills-section">
-            <p className="small" style={{marginBottom: '8px'}}><strong>Skills:</strong></p>
-            <div className="skills-tags">
-              {['C', 'C++', 'C#', 'Python', 'MATLAB', 'Java', 'Javascript', 'Shell', 'CSS'].map(skill => (
-                <span key={skill} className="skill-tag">{skill}</span>
-              ))}
+export default function About() {
+    return (
+        <section id="about">
+            <div className="section-heading">About</div>
+            <div className="about-text">
+                <p>
+                    I mostly write C - embedded firmware, OS kernels, and low-level systems tooling.
+                    I maintain perspicua, a 64-bit AArch64 kernel for the Raspberry Pi 4, and have
+                    some contributions to the Linux kernel. Currently studying CS at UPB ACS.
+                </p>
+                <p>
+                    When I'm not doing this nerd stuff, I like watching and playing football, strumming
+                    the guitar, and drinking beer with my closest friends.
+                </p>
             </div>
-          </div>
-          <p className="small" style={{marginTop: '12px'}}><strong>Interests:</strong> Music · Sports · Technology · Gaming</p>
-        </div>
-      </div>
-    </section>
-  )
+            <div className="attr-list">
+                <div className="attr-row">
+                    <span className="attr-label">languages</span>
+                    <span className="attr-value">C  C++  Assembly  Python  Shell  CMake</span>
+                </div>
+                <div className="attr-row">
+                    <span className="attr-label">tools</span>
+                    <span className="attr-value">QEMU  GDB  libsodium  SDL2  SIMD/AVX2  git</span>
+                </div>
+                <div className="attr-row">
+                    <span className="attr-label">interests</span>
+                    <span className="attr-value">instagram reels</span>
+                </div>
+            </div>
+        </section>
+    )
 }
