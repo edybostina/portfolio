@@ -253,6 +253,45 @@ a.contact-link:hover { color: var(--accent); }
   border-color: var(--accent);
 }
 
+/* ── blog/gsoc ───────────────────────────────────────────── */
+
+.blog-list {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.blog-post {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.blog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 4px;
+}
+
+.blog-title {
+  font-weight: bold;
+  color: var(--heading);
+  font-size: 14px;
+}
+
+.blog-date {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.blog-content {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.6;
+}
+
 /* ── footer ──────────────────────────────────────────────── */
 
 .footer {

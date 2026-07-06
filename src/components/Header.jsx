@@ -6,7 +6,7 @@ export default function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'projects', 'about', 'contact']
+      const sections = ['home', 'projects', 'gsoc', 'about', 'contact']
       const current = sections.find(id => {
         const el = document.getElementById(id)
         if (!el) return false
@@ -28,7 +28,7 @@ export default function Header() {
     <header className="header">
       <div className="brand">edybostina</div>
       <nav className="nav">
-        {['home', 'projects', 'about', 'contact'].map(section => (
+        {['home', 'projects', 'gsoc', 'about', 'contact'].map(section => (
           <a
             key={section}
             className={`navlink${activeSection === section ? ' active' : ''}`}

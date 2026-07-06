@@ -1,6 +1,7 @@
 import React from 'react'
 import Header from './components/Header'
 import Projects from './components/Projects'
+import GSoC from './components/GSoC'
 import About from './components/About'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
@@ -22,6 +23,7 @@ export default function App() {
                 </section>
 
                 <Projects />
+                <GSoC />
                 <About />
                 <Contact />
             </main>

@@ -7,6 +7,7 @@ export default function About() {
             <div className="about-text">
                 <p>
                     I mostly write C - embedded firmware, OS kernels, and low-level systems tooling.
+                    I also like working with math stuff and AI/ML.
                     I maintain perspicua, a 64-bit AArch64 kernel for the Raspberry Pi 4, and have
                     some contributions to the Linux kernel. Currently studying CS at UPB ACS.
                 </p>
