@@ -6,10 +6,12 @@ export default function About() {
             <div className="section-heading">About</div>
             <div className="about-text">
                 <p>
-                    I mostly write C - embedded firmware, OS kernels, and low-level systems tooling.
+                    I mostly write C : embedded firmware, OS kernels, and low-level systems tooling.
                     I also like working with math stuff and AI/ML.
-                    I maintain perspicua, a 64-bit AArch64 kernel for the Raspberry Pi 4, and have
-                    some contributions to the Linux kernel. Currently studying CS at UPB ACS.
+                    I contribute to the mainline Linux kernel and I'm a Google Summer of Code '26
+                    contributor with The Linux Foundation, working on devicetree binding conversions.
+                    On the side I build perspicua, a 64-bit AArch64 kernel from scratch for the
+                    Raspberry Pi 4. Currently studying CS at UPB ACS.
                 </p>
                 <p>
                     When I'm not doing this nerd stuff, I like watching and playing football, strumming

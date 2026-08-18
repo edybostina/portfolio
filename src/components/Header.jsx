@@ -21,7 +21,14 @@ export default function Header() {
 
   const handleClick = (e, id) => {
     e.preventDefault()
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    const el = document.getElementById(id)
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    } else {
+      // we're on a post page: set the hash so App renders the main page,
+      // which then scrolls to this section.
+      window.location.hash = id
+    }
   }
 
   return (

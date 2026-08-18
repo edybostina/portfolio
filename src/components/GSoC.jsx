@@ -1,61 +1,37 @@
 import React from 'react'
-
-const posts = [
-    {
-        date: '2026-05-20',
-        title: 'Community Bonding & Environment Setup',
-        content: 'Started my GSoC journey with the Linux Foundation. Having already contributed several patches during the application period, I\'m familiar with the basics, but I spent these first weeks refining my build environment and syncing with mentors on the specific YAML schema conversion goals for the project.'
-    },
-    {
-        date: '2026-05-28',
-        title: 'OMAP Counter-32K Conversion',
-        content: 'Submitted the OMAP Counter-32K conversion patch. Learning the nuances of YAML validation and navigating the upstream review process—received helpful feedback from Conor Dooley and Manorit Chawdhry. Even though college exams are taking most of my time right now, I am making sure to keep pushing patches through.'
-    },
-    {
-        date: '2026-06-02',
-        title: 'TI IVA Bindings & Technical Refinement',
-        content: 'Currently working on the Texas Instruments IVA bindings conversion. This involved adding a DSP sub-node for OMAP3, allowing "ti,ivahd" as a standalone compatible for OMAP4/DRA7, and making "ti,hwmods" optional for backward compatibility. Most of my current work is WIP due to exams, but after June 19th, I\'ll go full throttle.'
-    },
-    {
-        date: '2026-06-23',
-        title: 'Exams Done. Back to the Kernel.',
-        content: [
-            'Okay, so exams are finally over. I handed in my last one a few days ago and honestly just sat there for a moment staring at the ceiling, that specific kind of quiet when your brain finally stops running on caffeine and anxiety. It\'s a goooood feeling.',
-            'To celebrate (and decompress), I spent a few days at the beach with some friends, from the 19th up until yesterday. Exactly what I needed. Sun, salt water, and zero talk of device trees.',
-            'Now I\'m fully back. I\'ve been working on a few patches locally that I haven\'t sent out yet. I want to clean them up a bit before pushing them for internal review. ',
-            'The plan for the coming weeks is to pick up the pace significantly. GSoC\'s midpoint isn\'t that far away and I want to have a solid chunk of conversions done and reviewed by then. No more juggling kernel patches with exam flashcards, just one thing at a time now, and that one thing is this.',
-            'More updates soon. The patches won\'t review themselves.'
-        ]
-    },
-    {
-        date: '2026-07-06',
-        title: 'Midpoint: 25/50 files converted, midterm evaluations begin.',
-        content: [
-            '25 out of 50 files converted. Exactly halfway. The pace has been solid and I\'m happy with where things stand.',
-            'The upstream process can get a bit tricky at times. Review feedback sometimes sends you back to rethink how a binding is structured, and the occasional edge case in the schema doesn\'t help. Nothing unmanageable, just something you learn to navigate.',
-            'The GSoC midterm evaluations also kicked off today. Neither my mentors nor I have submitted feedback yet, so we\'ll see how that goes over the next few days. Fingers crossed.'
-        ]
-    }
-]
+import { postsByDate } from '../data/gsocPosts'
 
 export default function GSoC() {
     return (
         <section id="gsoc">
             <div className="section-heading">GSoC '26: Linux Kernel</div>
-            <div className="blog-list">
-                {posts.map((post, i) => (
-                    <div className="blog-post" key={i}>
-                        <div className="blog-header">
-                            <span className="blog-title">{post.title}</span>
-                            <span className="blog-date">{post.date}</span>
-                        </div>
-                        <div className="blog-content">
-                            {Array.isArray(post.content)
-                                ? post.content.map((para, j) => <p key={j} style={{ margin: j === 0 ? '0' : '10px 0 0 0' }}>{para}</p>)
-                                : post.content
-                            }
-                        </div>
-                    </div>
+            <div className="about-text" style={{ marginBottom: '24px' }}>
+                <p>
+                    I'm a Google Summer of Code '26 contributor with The Linux Foundation,
+                    working directly in the mainline Linux kernel tree. My project is
+                    converting the kernel's devicetree bindings from the old free-form
+                    <code> .txt</code> format into validated YAML schemas (the machine-checkable
+                    contracts that describe how hardware is wired up on a board).
+                </p>
+                <p>
+                    In practice that means writing the YAML schema, updating the
+                    <code> .dts</code> device tree sources that reference each binding, and reading
+                    through the relevant driver code to make sure the schema actually matches
+                    what the driver expects. Every patch goes through the standard upstream
+                    review process on the kernel mailing lists: real maintainers, real review,
+                    merged into the tree everyone runs.
+                </p>
+            </div>
+
+            <div className="blog-index">
+                {postsByDate.map(post => (
+                    <a className="blog-index-item" href={`#/gsoc/${post.slug}`} key={post.slug}>
+                        <span className="blog-index-date">{post.date}</span>
+                        <span className="blog-index-text">
+                            <span className="blog-index-title">{post.title}</span>
+                            <span className="blog-index-summary">{post.summary}</span>
+                        </span>
+                    </a>
                 ))}
             </div>
 
