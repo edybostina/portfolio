@@ -33,7 +33,7 @@ export default function Header() {
 
   return (
     <header className="header">
-      <div className="brand">edybostina</div>
+      <div className="brand"><span className="brand-prompt">~/</span>edybostina<span className="cursor" /></div>
       <nav className="nav">
         {['home', 'projects', 'gsoc', 'about', 'contact'].map(section => (
           <a

@@ -28,26 +28,15 @@ export const posts = [
     {
         slug: 'ti-iva-bindings',
         date: '2026-06-02',
-        title: 'TI IVA Bindings & Technical Refinement',
-        summary: 'Working through the IVA and DSP bindings locally, around exams.',
+        title: 'The IVA conversion, and learning what "conversion" means',
+        summary: 'The review that taught me a conversion is not an invitation to fix everything you notice.',
         content: [
-            'Currently working on the Texas Instruments IVA bindings conversion (the imaging and video accelerator on OMAP). So far this has involved adding a DSP sub-node for OMAP3, allowing "ti,ivahd" as a standalone compatible for OMAP4 and DRA7, and making "ti,hwmods" optional so older boards that still carry it do not break.',
-            'The Counter-32K patch has started getting comments back, including from one of my mentors, so there is a v2 to prepare there as well.',
-            'Most of my current work is WIP due to exams, but after June 19th, I\'ll go full throttle.'
-        ]
-    },
-    {
-        slug: 'iva-review-scope',
-        date: '2026-07-11',
-        title: 'The IVA review, and learning what "conversion" means',
-        summary: 'Three revisions, mostly because I did not understand what belongs inside a conversion.',
-        content: [
-            'I sent the DSP and IVA conversions as a pair at the end of June. The review came back from Krzysztof Kozlowski and it was blunt in the way upstream review is blunt when you have missed the point.',
-            'I had carried over a "ti,iva" compatible that did not need to exist. I had written the schema so that "ti,ivahd" was, as he put it, both compatible and not compatible at the same time. And I had quietly folded in a handful of unrelated improvements I had noticed along the way.',
+            'The Texas Instruments IVA bindings (the imaging and video accelerator on OMAP) were where I stopped coasting.',
+            'I sent DSP and IVA as a pair. The review came back from Krzysztof Kozlowski and it was blunt in the way that upstream review is blunt when you have missed the point. I had carried over a "ti,iva" compatible that did not need to exist, and I had written the schema so that "ti,ivahd" was, as he put it, both compatible and not compatible at the same time. I had also quietly folded in a handful of unrelated improvements I had noticed along the way.',
             'That last one was the real lesson. His words: this "should not be part of the conversion but separate commit with separate reason and analysis of actual ABI usage. During conversion you only make changes necessary to finish it, not things you in general find."',
-            'So in v2 I dutifully split everything out into its own patches, making "ti,hwmods" optional as one patch and documenting the DSP child node as another, five patches in total. And got told to squash them back in: if the conversion leads to known warnings and the original binding is not correct, then the conversion was supposed to make those changes.',
-            'Those two pieces of feedback sound contradictory and they are not, which took me an embarrassing amount of staring to see. Changes that are required for the conversion to be correct belong inside it. Changes I merely think are improvements belong somewhere else entirely. The line is "does the conversion work without this", not "is this a good idea".',
-            'v3 went out as two patches and picked up Reviewed-by tags on both. Roughly the same technical content as v1. Organised completely differently.'
+            'So in v2 I dutifully split everything out into its own patches: making "ti,hwmods" optional as one patch, documenting the DSP child node as another. And got told to squash them back in: if the conversion leads to known warnings and the original binding is wrong, then the conversion was supposed to make those changes.',
+            'Those two pieces of feedback sound contradictory and they are not, which took me an embarrassing amount of staring to see. Changes that are *required* for the conversion to be correct belong inside it. Changes you merely think are improvements belong somewhere else entirely. The line is "does the conversion work without this", not "is this a good idea".',
+            'v3 went in with Reviewed-by tags on both. Same technical content as v1, more or less. Organised completely differently.'
         ]
     },
     {
@@ -70,9 +59,9 @@ export const posts = [
         summary: 'Halfway, and the review comments start to rhyme.',
         content: [
             '25 out of 50 files converted. Exactly halfway. The pace has been solid and I\'m happy with where things stand.',
-            'The DSP and IVA series is the one taking the most out of me. I sent v2 today, five patches instead of the original two, after review made it clear the first attempt had bundled things together that did not belong together. I suspect that is not the end of it.',
-            'What has changed since the start is that some of the review has started to become predictable. Property types must match what already exists rather than what would be tidier, so if a property has always been a string it stays a string, even where an array would look neater. Every schema needs "unevaluatedProperties: false" or "additionalProperties: false", and knowing which of the two applies. Filenames follow the compatible string rather than anything descriptive I might prefer.',
-            'The bot that runs dt_binding_check against every patch on the list has become the thing I check for first. It is a good habit: it catches the schema errors before a human has to spend attention on them.',
+            'What has changed since the start is that I can predict most of the review now. Filenames must match the compatible string, so ti,k2g-message-manager.yaml rather than anything descriptive I might have preferred. "unevaluatedProperties: false" or "additionalProperties: false" on every schema, and knowing which of the two applies. Property types must match what already exists rather than what would be tidier — if a property has always been a string, it stays a string, even where an array would be neater.',
+            'The subsystem-specific conventions are the ones that catch me. Mark Brown has now told me twice that my subject lines do not look like the rest of the subsystem: "Look at what existing commits in the area you\'re changing are doing and make sure your subject lines visually resemble what they\'re doing." Fair, and easy to fix by reading the git log for the directory before writing the subject rather than after.',
+            'Rob Herring\'s CI bot has become the thing I check for first. It runs dt_binding_check on every patch that hits the list and replies with the failures, which for me has meant missing required "clocks" and "clock-names" on the PWM subsystem schema, a phandle that validated under two branches at once in the DA850 pinctrl one, and an incomplete simple-bus setup on the L4 interconnect.',
             'The GSoC midterm evaluations also kicked off today. Neither my mentors nor I have submitted feedback yet, so we\'ll see how that goes over the next few days. Fingers crossed :).'
         ]
     },
@@ -84,24 +73,10 @@ export const posts = [
         content: [
             'About 10 files left to convert. The conversions themselves have gotten pretty mechanical by now, I know the schema patterns, I know roughly what the driver code is going to tell me, and most files don\'t surprise me anymore.',
             'What I didn\'t fully appreciate at the start is that converting a binding and landing a binding are two completely different timelines. I still have a queue of finished files on my machine waiting to be sent out, and getting them through review is the slow part, not writing them.',
-            'Some series come back needing rework. A maintainer points out that a property should be optional, or that I dropped a compatible string some old board still depends on, and the patch goes around again as v2, v3, sometimes further. The TPS65217 series is on v4 now and has grown from one patch into four, because converting the PMIC binding meant also converting the power button and the backlight that live inside it, and renaming regulator nodes in the .dts to match.',
-            'The other thing this month taught me is that "wrong" and "cannot be changed" are different. On the Palmas RTC conversion Alexandre Belloni suggested moving to the generic aux-voltage-chargeable property, which would have been the tidier description. Rob Herring\'s answer was essentially that it would be nice, but this is an existing binding on old hardware and we are stuck with it. Compatibility is a constraint you inherit, not a preference.',
-            'Some of it is more satisfying. The am335x-guardian board had an "isink-en" property sitting in its device tree that turned out to be undocumented and not read by any driver at all, so that became its own small patch to delete it. That is the quiet argument for this whole project: the old free-form format let the binding, the device tree and the driver drift apart for years, because nothing ever checked.',
+            'The clearest example of that gap was the PWM subsystem conversion. Rob Herring gave it a Reviewed-by, and then took it back: "Withdrawn. Your example is incomplete." I had been testing with DT_SCHEMA_FILES, which only checks the schema you point it at. He pointed me at "make pwm/ti,am33xx-pwmss.yaml" instead, which is a more complete test. My tooling had been telling me everything was fine, which is worse than it telling me nothing.',
+            'Some series come back needing rework. A maintainer points out that a property should be optional, or that I dropped a compatible string some old board still depends on, and the patch goes around again as v2, v3, sometimes further. The TPS65217 series is on v4 and has grown from one patch into four, because converting the PMIC binding meant also converting the power button and the backlight that live inside it, and renaming regulator nodes in the .dts to match.',
             'And sometimes it is simply quiet. Maintainers are people with their own queues and their own priorities, so a series can sit for a week or two before anyone gets to it. Not much to do about that except keep sending files and be patient.',
             'So the local work is nearly finished and the upstream work has a while left to run. Still plenty to send.'
-        ]
-    },
-    {
-        slug: 'tests-were-lying',
-        date: '2026-08-15',
-        title: 'My tests were lying to me.',
-        summary: 'A Reviewed-by gets withdrawn, and I find out my validation had never been checking the thing I thought.',
-        content: [
-            'The PWM subsystem conversion got a Reviewed-by from Rob Herring this week. Then it got taken away again: "Withdrawn. Your example is incomplete."',
-            'The problem was my testing. I had been validating schemas with DT_SCHEMA_FILES, which checks the schema you point it at and nothing else. He pointed me at "make pwm/ti,am33xx-pwmss.yaml" instead, which is a more complete test, and that immediately turned up what the narrower one had been happily ignoring. The bot had already flagged missing "clocks" and "clock-names" as required properties on the example; my local run had said everything was fine.',
-            'A test that only checks what you told it to check will always agree with you. That is worse than having no test, because no test at least leaves you suspicious.',
-            'The DA850 pinctrl conversion went through something similar, though less embarrassing: the bot caught a phandle that was validating under two branches of the schema at once, which is the kind of thing that is invisible when you read the YAML and obvious when a machine evaluates it. Three revisions later it has Reviewed-by tags from both Rob and Linus Walleij.',
-            'The other running theme is that conventions are local. Mark Brown has now told me more than once that my subject lines do not look like the rest of the subsystem: "Look at what existing commits in the area you\'re changing are doing and make sure your subject lines visually resemble what they\'re doing." There is no single kernel style, and the fastest way to learn a subsystem\'s is to read its git log before writing anything rather than after.'
         ]
     },
     {
@@ -111,11 +86,11 @@ export const posts = [
         summary: 'End of the coding period. All 50 bindings converted, around 30 sent upstream across 19 subsystems.',
         content: [
             'All 50 bindings are converted. That was the scope I proposed back in May, and as of this week every one of them exists as a YAML schema, with the device tree sources they broke fixed alongside them.',
-            'The honest status, because the difference matters: converted is not the same as merged. Around 30 of them have been sent upstream so far. Roughly 25 have picked up Reviewed-by tags from maintainers, and a dozen or so have been applied to maintainer trees and are carried in linux-next: the TPS65217 backlight, the OMAP USB TLL, the HDQ one-wire, the TS-4800 watchdog and touchscreen, the OMAP2420 MMC, SmartReflex, the DA8XX MSTPRI bus, the APLL clock, the L4 interconnect. The rest are written and queued for me to send. That will continue past the end of the program.',
+            'The honest status, because the difference matters: converted is not the same as merged. Around 30 of them have been sent upstream so far. Roughly 25 have picked up Reviewed-by tags from maintainers, and a dozen or so have been applied to maintainer trees and are carried in linux-next — the TPS65217 backlight, the OMAP USB TLL, the HDQ one-wire, the TS-4800 watchdog and touchscreen, the OMAP2420 MMC, SmartReflex, the DA8XX MSTPRI bus, the APLL clock, the L4 interconnect. The rest are written and queued for me to send. That will continue past the end of the program.',
             'What surprised me looking back is how far the work spread. It started as "some TI bindings" and ended up touching 19 different subsystems: arm, bus, clock, display, input, leds, mailbox, mfd, mmc, net, pinctrl, power, pwm, regulator, rtc, soc, sound, w1 and watchdog. Each one has its own maintainer, its own conventions, and its own idea of what a good patch looks like. I sent patches to, among others, Rob Herring and Krzysztof Kozlowski on devicetree, Mark Brown for sound and regulators, Dmitry Torokhov for input, Lee Jones for MFD, Alexandre Belloni for RTC, Stephen Boyd for clocks, Linus Walleij for pinctrl, Uwe Kleine-König for PWM, and Ulf Hansson for MMC.',
-            'The conversions also turned up real dead weight. The am335x-guardian board had an "isink-en" property that was, as the review confirmed, not documented anywhere and not read by any driver, it had just been sitting in the device tree. Dropping it was its own patch. Rob spotted a similar orphan in the TPS65217 backlight binding. That is the quiet argument for this whole project: the old free-form format let the binding, the device tree and the driver drift apart for years, because nothing was ever checked.',
-            'The hardest one was IVA, and not for technical reasons, it took three revisions mostly because I did not understand what belonged inside a conversion and what did not. The longest was TPS65217, which reached v4 and grew from a single patch into a four-patch series once it became clear that converting the PMIC meant converting the power button and backlight inside it too, and renaming regulator nodes in the .dts to match.',
-            'Thanks to my mentors: Daniel Baluta, Simona Toaca, Dhruva Gole and Manorit Chawdhry for the reviews, for catching things before they reached the list, and for pointing me at the right people when I got stuck. And thanks to the maintainers who took the time to explain what I had got wrong rather than just dropping the patch on the floor.',
+            'The conversions also turned up real dead weight. The am335x-guardian board had an "isink-en" property that was, as the review confirmed, not documented anywhere and not read by any driver — it had just been sitting in the device tree. Dropping it was its own patch. Rob spotted a similar orphan in the TPS65217 backlight binding. That is the quiet argument for this whole project: the old free-form format let the binding, the device tree and the driver drift apart for years, because nothing was ever checked.',
+            'The hardest one was IVA, and not for technical reasons — it took three revisions mostly because I did not understand what belonged inside a conversion and what did not. The longest was TPS65217, which reached v4 and grew from a single patch into a four-patch series once it became clear that converting the PMIC meant converting the power button and backlight inside it too, and renaming regulator nodes in the .dts to match.',
+            'Thanks to my mentors — Daniel Baluta, Simona Toaca, Dhruva Gole and Manorit Chawdhry — for the reviews, for catching things before they reached the list, and for pointing me at the right people when I got stuck. And thanks to the maintainers who took the time to explain what I had got wrong rather than just dropping the patch on the floor.',
             'Everything is public: lore.kernel.org/all/?q=egbostina@gmail.com. I am going to keep sending the remaining series until they are all in.'
         ]
     },
