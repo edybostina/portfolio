@@ -1,23 +1,20 @@
 import React from 'react'
+import { STATS } from '../data/site'
 
-// Every number here is checkable: patches from lore, the rest from the repos.
-const STATS = [
-    { n: '22',  k: 'patches upstream' },
-    { n: '16',  k: 'subsystems' },
-    { n: '35k', k: 'loc kernel' },
-    { n: '46',  k: 'syscalls' },
-    { n: '9.4', k: 'gpa / 10' },
-]
-
+// One readout line, like the key/value block kfetch prints in the capture above it.
 export default function Stats() {
     return (
-        <div className="stats">
+        <ul className="readout" aria-label="In numbers">
             {STATS.map(s => (
-                <div className="stat" key={s.k}>
-                    <div className="stat-n">{s.n}</div>
-                    <div className="stat-k">{s.k}</div>
-                </div>
+                <li key={s.k}>
+                    {s.href ? (
+                        <a className="readout-n" href={s.href} target="_blank" rel="noopener noreferrer">{s.n}</a>
+                    ) : (
+                        <span className="readout-n">{s.n}</span>
+                    )}{' '}
+                    {s.k}
+                </li>
             ))}
-        </div>
+        </ul>
     )
 }

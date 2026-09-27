@@ -141,3 +141,10 @@ export const posts = [
 export const postsByDate = [...posts].sort((a, b) => b.date.localeCompare(a.date))
 
 export const findPost = (slug) => posts.find(p => p.slug === slug)
+
+const MONTHS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec']
+
+export const monthName = iso => MONTHS[Number(iso.slice(5, 7)) - 1]
+
+// '2026-08-18' -> '18 aug', the same shape as the patch dates
+export const shortDate = iso => `${Number(iso.slice(8, 10))} ${monthName(iso)}`

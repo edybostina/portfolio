@@ -1,19 +1,15 @@
 import React from 'react'
 
-const BOOT_IMG = `${import.meta.env.BASE_URL}perspicua-boot.jpg`
+const featured = {
+    title: 'perspicua',
+    note: 'maintainer · 463 commits',
+    desc: '64-bit UNIX-like kernel for the Raspberry Pi 4, written from scratch with three friends. Boots on the real board to a userspace shell: SMP across four cores, virtual memory with copy-on-write, 46 syscalls, a VFS with FAT32 root, a page cache and its own libc.',
+    detail: '21 in-kernel test suites, KASAN, lockdep and an in-kernel debugger.',
+    tags: ['C', 'AArch64 asm', 'SMP', 'virtual memory', 'VFS', 'bare metal'],
+    link: 'https://github.com/perspicua/perspicua',
+}
 
-const projects = [
-    {
-        title: 'perspicua',
-        note: 'maintainer · 463 commits',
-        desc: '64-bit UNIX-like kernel for the Raspberry Pi 4, written from scratch with three friends. Boots on the real board to a userspace shell: SMP across four cores, virtual memory with copy-on-write, 46 syscalls, a VFS with FAT32 root, a page cache and its own libc. 21 in-kernel test suites, KASAN, lockdep and an in-kernel debugger.',
-        tags: ['C', 'AArch64 asm', 'SMP', 'virtual memory', 'VFS', 'bare metal'],
-        link: 'https://github.com/perspicua/perspicua',
-        wide: true,
-        shot: BOOT_IMG,
-        shotAlt: 'perspicua booting on a Raspberry Pi 4, kernel log on an attached display',
-        shotCap: 'booting on real hardware',
-    },
+const rest = [
     {
         title: 'aegis',
         desc: 'Cross-platform CLI for authenticated file encryption. Passphrase and keyfile modes, optional compression, recursive directories. Five tagged releases with CI.',
@@ -41,42 +37,54 @@ const projects = [
     },
 ]
 
-function Card({ p }) {
-    const body = (
-        <>
-            <a className="card-src" href={p.link} target="_blank" rel="noopener noreferrer">
-                [src]
-            </a>
-            <div className="card-title">
-                {p.title}
-                {p.note && <span className="card-note">{p.note}</span>}
-            </div>
-            <p className="card-desc">{p.desc}</p>
-            <div className="tags">
-                {p.tags.map(t => <span className="tag" key={t}>{t}</span>)}
-            </div>
-        </>
-    )
-
-    if (!p.wide) return <div className="card">{body}</div>
-
+function Src({ href, name }) {
     return (
-        <div className="card wide">
-            <div>{body}</div>
-            <div>
-                <img className="shot" src={p.shot} alt={p.shotAlt} loading="lazy" />
-                <div className="shot-cap">{p.shotCap}</div>
-            </div>
-        </div>
+        <a className="src-link" href={href} target="_blank" rel="noopener noreferrer" aria-label={`${name} source on GitHub`}>
+            [src]
+        </a>
+    )
+}
+
+function Tags({ tags }) {
+    return (
+        <ul className="tags" aria-label="Stack">
+            {tags.map(t => <li key={t}>{t}</li>)}
+        </ul>
     )
 }
 
 export default function Projects() {
     return (
-        <section id="projects">
-            <div className="section-heading">Projects</div>
-            <div className="project-grid">
-                {projects.map(p => <Card p={p} key={p.title} />)}
+        <section id="projects" className="section">
+            <h2 className="rail">projects</h2>
+
+            <div className="section-body">
+                <article className="featured">
+                    <header className="project-head">
+                        <h3 className="featured-title">{featured.title}</h3>
+                        <Src href={featured.link} name={featured.title} />
+                    </header>
+                    <p className="project-note">{featured.note}</p>
+                    <p className="featured-desc">{featured.desc}</p>
+                    <p className="featured-detail">{featured.detail}</p>
+                    <Tags tags={featured.tags} />
+                </article>
+
+                <div className="project-grid">
+                    {rest.map(p => (
+                        <article className="project" key={p.title}>
+                            <header className="project-head">
+                                <h3 className="project-title">
+                                    {p.title}
+                                    {p.note && <span className="project-flag">{p.note}</span>}
+                                </h3>
+                                <Src href={p.link} name={p.title} />
+                            </header>
+                            <p className="project-desc">{p.desc}</p>
+                            <Tags tags={p.tags} />
+                        </article>
+                    ))}
+                </div>
             </div>
         </section>
     )

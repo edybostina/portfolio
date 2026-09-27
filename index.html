@@ -18,9 +18,25 @@
     <meta name="twitter:title" content="edybostina" />
     <meta name="twitter:description"
         content="CS student at UPB. C developer and Linux kernel contributor." />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#050b17" />
     <link rel="icon" type="image/svg+xml"
-        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90' fill='%23ffb000'>_</text></svg>" />
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23050b17'/><text x='16' y='23.5' text-anchor='middle' font-family='ui-monospace,Menlo,Consolas,monospace' font-size='24' font-weight='600' fill='%23a7f0c7'>e</text></svg>" />
     <title>edybostina</title>
+    <script>
+        // The intro plays once per browser session, like the old boot did:
+        // a returning visitor never sits through it twice. Decided before first
+        // paint so the hero never flashes in its final state first.
+        (function () {
+            try {
+                if (!sessionStorage.getItem('intro') &&
+                    !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+                    document.documentElement.classList.add('intro')
+                }
+                sessionStorage.setItem('intro', '1')
+            } catch (e) { }
+        })()
+    </script>
 </head>
 
 <body>

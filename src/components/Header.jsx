@@ -1,51 +1,83 @@
-import React, { useState, useEffect } from 'react'
-import ThemeToggle from './ThemeToggle'
+import React, { useState, useEffect, useLayoutEffect, useRef } from 'react'
 
-export default function Header() {
-  const [activeSection, setActiveSection] = useState('home')
+const SECTIONS = ['home', 'projects', 'gsoc', 'about', 'contact']
 
+export default function Header({ onPost }) {
+  const [active, setActive] = useState('home')
+  const navRef = useRef(null)
+  const barRef = useRef(null)
+
+  // Track which section sits under the header without a scroll listener:
+  // a thin band near the top of the viewport, and whichever section crosses it wins.
   useEffect(() => {
-    const handleScroll = () => {
-      const sections = ['home', 'projects', 'gsoc', 'about', 'contact']
-      const current = sections.find(id => {
-        const el = document.getElementById(id)
-        if (!el) return false
-        const rect = el.getBoundingClientRect()
-        return rect.top <= 100 && rect.bottom >= 100
-      })
-      if (current) setActiveSection(current)
+    if (onPost) return
+    const els = SECTIONS.map(id => document.getElementById(id)).filter(Boolean)
+    const io = new IntersectionObserver(
+      entries => {
+        entries.forEach(e => { if (e.isIntersecting) setActive(e.target.id) })
+      },
+      { rootMargin: '-72px 0px -70% 0px' }
+    )
+    els.forEach(el => io.observe(el))
+    return () => io.disconnect()
+  }, [onPost])
+
+  // One underline that travels to the active link, so moving between sections
+  // reads as moving along the same page. Written straight to the element's
+  // transform: no re-render per move.
+  useLayoutEffect(() => {
+    const nav = navRef.current
+    const bar = barRef.current
+    if (!nav || !bar) return
+
+    const place = () => {
+      const link = !onPost && nav.querySelector(`[data-section="${active}"]`)
+      if (!link) { delete bar.dataset.on; return }
+      // rects, not offsetLeft/offsetWidth: those round, and the bar would sit a pixel off
+      const l = link.getBoundingClientRect()
+      const n = nav.getBoundingClientRect()
+      bar.style.transform = `translateX(${l.left - n.left}px) scaleX(${l.width})`
+      bar.dataset.on = ''
     }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+
+    place()
+    // the first placement lands without travelling; later moves animate
+    const raf = requestAnimationFrame(() => { bar.dataset.ready = '' })
+    // widths change when the web font arrives and when the layout wraps
+    const ro = new ResizeObserver(place)
+    ro.observe(nav)
+    return () => { cancelAnimationFrame(raf); ro.disconnect() }
+  }, [active, onPost])
 
   const handleClick = (e, id) => {
-    e.preventDefault()
     const el = document.getElementById(id)
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    } else {
-      // we're on a post page: set the hash so App renders the main page,
-      // which then scrolls to this section.
-      window.location.hash = id
-    }
+    if (!el) return // on a post page: let the hash change render the main page
+    e.preventDefault()
+    // pointer clicks scroll (via the CSS, so reduced motion still applies);
+    // keyboard activation (detail 0) jumps
+    el.scrollIntoView({ block: 'start', behavior: e.detail === 0 ? 'instant' : 'auto' })
+    history.replaceState(null, '', `#${id}`)
   }
 
   return (
     <header className="header">
-      <div className="brand"><span className="brand-prompt">~/</span>edybostina<span className="cursor" /></div>
-      <nav className="nav">
-        {['home', 'projects', 'gsoc', 'about', 'contact'].map(section => (
+      <a className="brand" href="#home" onClick={e => handleClick(e, 'home')}>
+        edybostina
+      </a>
+      <nav className="nav" aria-label="Sections" ref={navRef}>
+        {SECTIONS.map(id => (
           <a
-            key={section}
-            className={`navlink${activeSection === section ? ' active' : ''}`}
-            href={`#${section}`}
-            onClick={e => handleClick(e, section)}
+            key={id}
+            className="navlink"
+            href={`#${id}`}
+            data-section={id}
+            aria-current={!onPost && active === id ? 'true' : undefined}
+            onClick={e => handleClick(e, id)}
           >
-            {section}
+            {id}
           </a>
         ))}
-        <ThemeToggle />
+        <span className="nav-bar" ref={barRef} aria-hidden="true" />
       </nav>
     </header>
   )
