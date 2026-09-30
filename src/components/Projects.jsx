@@ -2,9 +2,9 @@ import React from 'react'
 
 const featured = {
     title: 'perspicua',
-    note: 'maintainer · 463 commits',
-    desc: '64-bit UNIX-like kernel for the Raspberry Pi 4, written from scratch with three friends. Boots on the real board to a userspace shell: SMP across four cores, virtual memory with copy-on-write, 46 syscalls, a VFS with FAT32 root, a page cache and its own libc.',
-    detail: '21 in-kernel test suites, KASAN, lockdep and an in-kernel debugger.',
+    note: 'maintainer · 500+ commits',
+    desc: '64-bit UNIX-like kernel for the Raspberry Pi 4, written from scratch with three friends. Boots on the real board to a userspace shell: SMP across four cores, virtual memory with copy-on-write, 47 syscalls, a VFS with FAT32 root, a page cache and its own libc.',
+    detail: '22 in-kernel test suites, KASAN, lockdep and an in-kernel debugger.',
     tags: ['C', 'AArch64 asm', 'SMP', 'virtual memory', 'VFS', 'bare metal'],
     link: 'https://github.com/perspicua/perspicua',
 }

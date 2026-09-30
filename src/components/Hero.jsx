@@ -1,5 +1,5 @@
 import React from 'react'
-import { LINKS, PATCHES_MERGED } from '../data/site'
+import { LINKS, PATCHES_UPSTREAM } from '../data/site'
 
 const BOOT_IMG = `${import.meta.env.BASE_URL}perspicua-boot.jpg`
 
@@ -12,7 +12,7 @@ export default function Hero() {
                     <p className="hero-sub">
                         C developer, CS student at Politehnica Bucharest.{' '}
                         <a href={LINKS.lore} target="_blank" rel="noopener noreferrer">
-                            {PATCHES_MERGED} patches in mainline Linux
+                            {PATCHES_UPSTREAM} patches accepted into Linux
                         </a>{' '}
                         and <a href="#projects">a kernel</a> that boots on real hardware.
                     </p>

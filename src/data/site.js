@@ -17,13 +17,14 @@ export const LINKS = {
     lf: 'https://www.linuxfoundation.org/',
 }
 
-export const PATCHES_MERGED = 22
+// Mainline plus linux-next (accepted, waiting for the merge window). Checked 30 Sep 2026.
+export const PATCHES_UPSTREAM = 24
 
 export const STATS = [
-    { n: String(PATCHES_MERGED), k: 'patches in mainline', href: LINKS.lore },
+    { n: String(PATCHES_UPSTREAM), k: 'patches upstream', href: LINKS.lore },
     { n: '16', k: 'subsystems' },
-    { n: '35k', k: 'lines of kernel' },
-    { n: '46', k: 'syscalls' },
+    { n: '39k', k: 'lines of code' },
+    { n: '47', k: 'syscalls' },
     { n: '9.4/10', k: 'gpa' },
 ]
 
