@@ -2,9 +2,14 @@
   The console, typeset.
 
   The palette is sampled from perspicua's own boot capture (public/perspicua-boot.jpg):
-  its background, its log text, and the mint of its shell cursor. The page background
-  matches the capture, so the screenshot sits on the page with no frame. One theme,
-  dark, on purpose: the page is the console. The cursor mint is the only accent, and it marks things you can act on.
+  its background, its lavender-white console text, the violet kfetch prints its keys in,
+  and the mint of its shell cursor. The page background matches the capture, so the
+  screenshot sits on the page with no frame. One theme, dark, on purpose: the page is
+  the console.
+
+  Two colours, two jobs, the same ones they have in the capture:
+  violet names things (section names and the key in a key/value pair, as kfetch does),
+  mint is the cursor: it marks things you can act on, and nothing else.
 
   Shape: everything square.
   Motion: output arrives the way a console prints it, and nothing moves while you
@@ -14,14 +19,15 @@
 */
 
 :root {
-  --bg:        #050b17;
-  --bg-raised: #0b1322;
-  --text:      #c4c6d3;
-  --strong:    #eef0f6;
-  --muted:     #8a8e9e;
-  --rule:      #263247;
-  --accent:    #a7f0c7;
-  --accent-ink:#050b17;
+  --bg:        #030c17;  /* capture background */
+  --bg-raised: #091623;
+  --text:      #cdc5d5;
+  --strong:    #e9def3;  /* capture console text */
+  --muted:     #9692a6;
+  --rule:      #2a2f45;
+  --key:       #a783f7;  /* kfetch keys */
+  --accent:    #7ffba5;  /* shell cursor */
+  --accent-ink:#030c17;
   color-scheme: dark;
 }
 
@@ -212,7 +218,7 @@ kbd {
   top: calc(var(--header-h) + 2rem);
   align-self: start;
   font: 500 0.875rem/1.4 var(--mono);
-  color: var(--strong);
+  color: var(--key);
 }
 
 .section-body { min-width: 0; }
@@ -303,14 +309,14 @@ kbd {
 .btn-primary:hover { background: var(--strong); border-color: var(--strong); color: var(--bg); }
 
 .hero-shot {
-  width: min(calc(var(--shot-h) * 0.7415), 44vw);
+  width: min(calc(var(--shot-h) * 0.6826), 44vw);
 }
 
 .hero-shot img {
   width: 100%;
   height: auto;
-  aspect-ratio: 760 / 1025;
-  background: #050b17;
+  aspect-ratio: 1428 / 2092;
+  background: #030c17;
 }
 
 .hero-shot figcaption {
@@ -329,7 +335,7 @@ kbd {
   padding-block: 1.25rem;
   border-top: 1px solid var(--rule);
   font: 400 0.8125rem/1.5 var(--mono);
-  color: var(--muted);
+  color: var(--key);
 }
 
 .readout-n {
@@ -537,7 +543,7 @@ a.readout-n:hover { color: var(--accent); }
 .now h3,
 .attr dt {
   font: 400 0.75rem/1.4 var(--mono);
-  color: var(--muted);
+  color: var(--key);
 }
 
 .now ul { margin-top: 0.6rem; display: grid; gap: 0.3rem; }
@@ -600,7 +606,7 @@ a.readout-n:hover { color: var(--accent); }
 }
 
 .channels li { display: flex; flex-direction: column; gap: 0.3rem; }
-.channel-k { font: 400 0.75rem/1.4 var(--mono); color: var(--muted); }
+.channel-k { font: 400 0.75rem/1.4 var(--mono); color: var(--key); }
 .channels a {
   padding-block: 0.2rem;
   font: 400 0.9375rem/1.4 var(--mono);
@@ -640,6 +646,7 @@ a.readout-n:hover { color: var(--accent); }
   display: grid;
   gap: 1.5rem;
   font-weight: 400;
+  color: var(--muted);
 }
 
 .back-link {
@@ -713,7 +720,7 @@ a.readout-n:hover { color: var(--accent); }
 .help:focus { outline: none; }
 
 /* ::backdrop does not reliably inherit custom properties, so spell the tint out */
-.help::backdrop { background: rgb(5 11 23 / 0.82); }
+.help::backdrop { background: rgb(3 12 23 / 0.82); }
 
 .help-box {
   min-width: min(20rem, 100%);
