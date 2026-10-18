@@ -33,7 +33,7 @@ const rest = [
         note: 'wip',
         desc: 'Cycle-accurate 6502 emulator, built to run original NES software.',
         tags: ['C', 'emulation'],
-        link: 'https://github.com/edybostina/mos6502-emulator',
+        link: 'https://github.com/edybostina/mos6502',
     },
 ]
 
