@@ -2,14 +2,14 @@
   The console, typeset.
 
   The palette is sampled from perspicua's own boot capture (public/perspicua-boot.jpg):
-  its background, its lavender-white console text, the violet kfetch prints its keys in,
-  and the mint of its shell cursor. The page background matches the capture, so the
-  screenshot sits on the page with no frame. One theme, dark, on purpose: the page is
-  the console.
+  its background, its lavender-white console text, and the violet kfetch prints its
+  keys in. The page background matches the capture, so the screenshot sits on the page
+  with no frame. One theme, dark, on purpose: the page is the console.
 
-  Two colours, two jobs, the same ones they have in the capture:
-  violet names things (section names and the key in a key/value pair, as kfetch does),
-  mint is the cursor: it marks things you can act on, and nothing else.
+  The violet is the only colour. It names things (section names and the key in a
+  key/value pair, as kfetch does) and carries everything you can act on: buttons,
+  link underlines, hover, focus, selection. Shape tells the two apart: what you can
+  act on is boxed or underlined, a name never is.
 
   Shape: everything square.
   Motion: output arrives the way a console prints it, and nothing moves while you
@@ -25,8 +25,8 @@
   --strong:    #e9def3;  /* capture console text */
   --muted:     #9692a6;
   --rule:      #2a2f45;
-  --key:       #a783f7;  /* kfetch keys */
-  --accent:    #7ffba5;  /* shell cursor */
+  --accent:    #a783f7;  /* kfetch violet */
+  --key:       var(--accent);
   --accent-ink:#030c17;
   color-scheme: dark;
 }
@@ -309,13 +309,13 @@ kbd {
 .btn-primary:hover { background: var(--strong); border-color: var(--strong); color: var(--bg); }
 
 .hero-shot {
-  width: min(calc(var(--shot-h) * 0.6826), 44vw);
+  width: min(calc(var(--shot-h) * 0.6571), 44vw);
 }
 
 .hero-shot img {
   width: 100%;
   height: auto;
-  aspect-ratio: 1428 / 2092;
+  aspect-ratio: 1368 / 2082;
   background: #030c17;
 }
 

@@ -32,8 +32,8 @@ export default function Hero() {
             <figure className="hero-shot">
                 <img
                     src={BOOT_IMG}
-                    width="1428"
-                    height="2092"
+                    width="1368"
+                    height="2082"
                     fetchPriority="high"
                     alt="perspicua's console after boot: the kernel log from driver probe to userspace, then kfetch reporting Perspicua 0.1.2 on a Raspberry Pi 4 Model B, aarch64, four Cortex-A72 cores"
                 />
