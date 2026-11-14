@@ -6,9 +6,9 @@ const GO = { p: 'projects', g: 'gsoc', a: 'about', c: 'contact', h: 'home' }
 
 const ROWS = [
     ['g h', 'home'],
+    ['g a', 'about'],
     ['g p', 'projects'],
     ['g g', 'gsoc'],
-    ['g a', 'about'],
     ['g c', 'contact'],
     ['?', 'this list'],
     ['esc', 'close'],

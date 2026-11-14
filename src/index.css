@@ -703,6 +703,26 @@ kbd {
 .patch-subject { font-family: var(--mono); font-size: 0.9375rem; }
 .patch-subsys { font-weight: 700; }
 
+/* the way into the log from the main page: one row, the whole width */
+.more {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.25rem 1.5rem;
+  margin-top: 3rem;
+  padding: 0.9rem 0.75rem 1rem;
+  border-block: 3px solid var(--fg);
+}
+.more:hover { background: var(--fg); color: var(--bg); }
+.more-title {
+  font-size: clamp(1.5rem, 4cqw, 2.25rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+.more-meta { font: 400 0.8125rem/1.4 var(--mono); }
+
 /* the log: months in the margin, one entry per row */
 .log-wrap { border-block: 3px solid var(--fg); }
 

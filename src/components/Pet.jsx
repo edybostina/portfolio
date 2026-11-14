@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { MapContext } from '../memmap'
 import { reducedMotion } from '../live'
-import RockySprite from './RockySprite'
+import RockySprite, { SPRITE_GROUND } from './RockySprite'
 
 // The pet. A small rock-shelled, five-limbed engineer, drawn as a homage to
 // Rocky from Project Hail Mary, using rocky.jpeg as the visual reference.
@@ -13,10 +13,10 @@ import RockySprite from './RockySprite'
 // walks somewhere else. Click him and he says something. An easter egg:
 // nothing points at him and he never gets in the way.
 
-const GAPS_BEFORE = ['projects', 'gsoc', 'about', 'contact'] // a gap sits above each of these
+const GAPS_BEFORE = ['about', 'projects', 'gsoc', 'contact'] // a gap sits above each of these
 const W = 76
 const H = 48
-const FEET = 44 // the sprite's feet sit this far below its top
+const FEET = Math.round(SPRITE_GROUND) // the sprite's feet sit this far below its top
 const SPEED = 34 // px per second
 
 // what he does when he stops walking: [activity, weight, shortest ms, longest ms]

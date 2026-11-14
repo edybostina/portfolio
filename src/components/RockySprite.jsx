@@ -1,5 +1,7 @@
 import React, { useId } from 'react'
-import rockyReference from '../../rocky.jpeg'
+// rocky.png is the reference (rocky.jpeg in the repo root) sampled down to its
+// own 100 x 100 pixel grid: the same picture, about a hundredth of the bytes.
+import rockyReference from '../assets/rocky.png'
 
 // Masks follow the reference's pixel contours on its original 100 × 100 grid.
 // Each limb keeps the original texture and proportions when it moves.
@@ -14,20 +16,58 @@ const CONTOURS = {
     rightLeg: 'M66 42H75V43H77V44H78V45H79V46H81V47H83V48H84V49H85V50H86V51H87V52H88V53H89V55H90V57H91V59H90V77H89V79H88V82H87V84H86V85H84V84H83V81H82V77H81V72H80V65H79V62H77V61H74V59H72V57H70V56H69V54H67V53H66V51H65V48H65V44H66Z',
 }
 
-// Angles are around the source-image joints. Sleeping hands fold inward as
-// complete forearms, so wrist/finger orientation cannot reverse independently.
+// Everything below is in the reference's 100-unit grid; the whole figure is
+// then halved into the 76x48 sprite.
+//
+// In the reference he floats, so his feet end at three different heights and
+// the near leg is drawn much larger than the others. On the page he stands on
+// a line, so each leg is fitted once to one ground level: the near leg is
+// scaled down about its hip and the middle leg is raised a touch.
+const GROUND = 85
+const HIP = { left: [31, 47], middle: [36, 56], right: [68, 46] }
+const FIT = {
+    left: `translate(${HIP.left[0]} ${HIP.left[1]}) scale(.86) translate(${-HIP.left[0]} ${-HIP.left[1]})`,
+    middle: 'translate(0 -2)',
+    right: '',
+}
+// Sitting lowers the shell by this much; the legs are squashed toward the
+// ground by the same amount, so hips stay attached and feet stay planted.
+const SIT = 7
+const SQUASH = (GROUND - HIP.left[1] - SIT) / (GROUND - HIP.left[1])
+
+// Two frames per activity. `arms` are the forearm angles (left, right) about
+// their elbows; `legs` are [lift, swing] for left, middle, right; `dy` moves
+// the shell. Movements are at least two units: one unit is half a pixel.
 const POSES = [
-    { states: 'idle0 idle1', left: 0, right: 0 },
-    { states: 'walk0', left: -3, right: 3, leftStep: -2, middleStep: 0, rightStep: 2 },
-    { states: 'walk1', left: 3, right: -3, leftStep: 2, middleStep: -2, rightStep: -2 },
-    { states: 'amaze0', left: -4, right: 4 },
-    { states: 'amaze1', left: 4, right: -4 },
-    { states: 'sleep0 sleep1', seated: true, left: 105, right: -105 },
-    { states: 'code0', seated: true, left: 70, rightUpper: 60, right: 120, prop: 'code' },
-    { states: 'code1', seated: true, left: 70, rightUpper: 60, right: 116, prop: 'code' },
-    { states: 'game0', seated: true, left: 65, rightUpper: 30, right: 60, prop: 'game' },
-    { states: 'game1', seated: true, left: 65, rightUpper: 30, right: 57, prop: 'game' },
+    { states: 'idle0', arms: [0, 0] },
+    { states: 'idle1', arms: [3, -3], dy: 0 },
+    // outer legs step while the middle one carries him, then the other way round
+    { states: 'walk0', arms: [-5, 5], legs: [[5, -7], [0, 0], [5, 7]], dy: -2 },
+    { states: 'walk1', arms: [5, -5], legs: [[0, 5], [5, 0], [0, -5]], dy: 0 },
+    { states: 'amaze0', arms: [-16, 16], dy: -3 },
+    { states: 'amaze1', arms: [10, -10], dy: 0 },
+    { states: 'sleep0', seated: true, arms: [105, -105] },
+    { states: 'sleep1', seated: true, arms: [105, -105], dy: 1 },
+    { states: 'code0', seated: true, arms: [70, 120], rightUpper: 60, prop: 'code' },
+    { states: 'code1', seated: true, arms: [70, 112], rightUpper: 60, prop: 'code' },
+    { states: 'game0', seated: true, arms: [65, 60], rightUpper: 30, prop: 'game' },
+    { states: 'game1', seated: true, arms: [65, 54], rightUpper: 30, prop: 'game' },
 ]
+
+const NO_LEGS = [[0, 0], [0, 0], [0, 0]]
+
+function legTransform(name, [lift, swing], seated) {
+    const [hx, hy] = HIP[name]
+    return [
+        seated ? `translate(0 ${GROUND}) scale(1 ${SQUASH.toFixed(3)}) translate(0 ${-GROUND})` : '',
+        lift ? `translate(0 ${-lift})` : '',
+        swing ? `rotate(${swing} ${hx} ${hy})` : '',
+        FIT[name],
+    ].filter(Boolean).join(' ')
+}
+
+// the sprite's ground line, in sprite units: where every foot rests
+export const SPRITE_GROUND = GROUND * 0.5 - 2
 
 export default function RockySprite({ width, height }) {
     const id = useId().replace(/:/g, '')
@@ -45,42 +85,48 @@ export default function RockySprite({ width, height }) {
                     <clipPath id={`${id}-${name}`} key={name}><path d={d} /></clipPath>
                 ))}
             </defs>
-            {POSES.map(pose => (
-                <g data-p={pose.states} key={pose.states}>
-                    <g transform="translate(3 -2) scale(.5)">
-                        <g transform={`translate(0 ${pose.middleStep || 0})`}>{part('middleLeg')}</g>
-                        <g transform={`rotate(${pose.seated ? -12 : pose.leftStep || 0} 31 47)`}>{part('leftLeg')}</g>
-                        <g transform={`rotate(${pose.seated ? 12 : pose.rightStep || 0} 68 46)`}>{part('rightLeg')}</g>
-                        <g transform={`translate(0 ${pose.seated ? 6 : 0})`}>
-                            {part('body')}
-                            {part('leftUpper')}
-                            <g transform={`rotate(${pose.rightUpper || 0} 66 34)`}>{part('rightUpper')}</g>
-                            <g transform={`rotate(${pose.left} 18 39)`}>{part('leftFore')}</g>
+            {POSES.map(pose => {
+                const [armL, armR] = pose.arms
+                const [legL, legM, legR] = pose.legs || NO_LEGS
+                const dy = (pose.seated ? SIT : 0) + (pose.dy || 0)
+                return (
+                    <g data-p={pose.states} key={pose.states}>
+                        <g transform="translate(3 -2) scale(.5)">
+                            <g transform={legTransform('middle', legM, pose.seated)}>{part('middleLeg')}</g>
+                            <g transform={legTransform('left', legL, pose.seated)}>{part('leftLeg')}</g>
+                            <g transform={legTransform('right', legR, pose.seated)}>{part('rightLeg')}</g>
+                            <g transform={`translate(0 ${dy})`}>
+                                {part('body')}
+                                {part('leftUpper')}
+                                <g transform={`rotate(${pose.rightUpper || 0} 66 34)`}>{part('rightUpper')}</g>
+                                <g transform={`rotate(${armL} 18 39)`}>{part('leftFore')}</g>
+                            </g>
                         </g>
-                    </g>
-                    {/* Props precede the working hand: fingers always remain visible. */}
-                    {pose.prop === 'code' && (
-                        <g>
-                            <path d="M38 42H64V44H38ZM62 24H65V42H62Z" className="px-k" />
-                            <path d={pose.states === 'code0' ? 'M61 26V28M61 31V33M61 36V38' : 'M61 28V30M61 33V35M61 38V40'} stroke="var(--yellow)" />
-                        </g>
-                    )}
-                    {pose.prop === 'game' && (
-                        <g>
-                            <path d="M51 25H65V31H51Z" className="px-v" />
-                            <path d="M54 26V30M52 28H56" stroke="var(--ink)" />
-                            <path d={pose.states === 'game0' ? 'M62 27H64M60 29H62' : 'M61 27H63M62 29H64'} stroke="var(--yellow)" />
-                        </g>
-                    )}
-                    <g transform="translate(3 -2) scale(.5)">
-                        <g transform={`translate(0 ${pose.seated ? 6 : 0})`}>
-                            <g transform={`rotate(${pose.rightUpper || 0} 66 34)`}>
-                                <g transform={`rotate(${pose.right} 88 38)`}>{part('rightFore')}</g>
+                        {/* Props precede the working hand: fingers always remain visible.
+                            The laptop sits on the ground where the typing hand comes down. */}
+                        {pose.prop === 'code' && (
+                            <g data-prop="code">
+                                <path d="M36 39H53V41H36ZM50 24H53V39H50Z" className="px-k" />
+                                <path d={pose.states === 'code0' ? 'M49 26V28M49 30V32M49 34V36' : 'M49 27V29M49 31V33M49 35V37'} stroke="var(--yellow)" />
+                            </g>
+                        )}
+                        {pose.prop === 'game' && (
+                            <g data-prop="game">
+                                <path d="M51 25H65V31H51Z" className="px-v" />
+                                <path d="M54 26V30M52 28H56" stroke="var(--ink)" />
+                                <path d={pose.states === 'game0' ? 'M62 27H64M60 29H62' : 'M61 27H63M62 29H64'} stroke="var(--yellow)" />
+                            </g>
+                        )}
+                        <g transform="translate(3 -2) scale(.5)">
+                            <g transform={`translate(0 ${dy})`}>
+                                <g transform={`rotate(${pose.rightUpper || 0} 66 34)`}>
+                                    <g transform={`rotate(${armR} 88 38)`}>{part('rightFore')}</g>
+                                </g>
                             </g>
                         </g>
                     </g>
-                </g>
-            ))}
+                )
+            })}
             <path data-p="sleep0 sleep1" d="M51 7H56L51 11H56" fill="none" stroke="var(--violet)" />
             <path data-p="sleep1" d="M58 2H62L58 5H62" fill="none" stroke="var(--violet)" />
         </svg>

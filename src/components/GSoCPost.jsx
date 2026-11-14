@@ -11,7 +11,7 @@ export default function GSoCPost({ post }) {
 
     return (
         <Region id="entry" name={`gsoc/${post.slug}`} perm="r--" tone="paper" as="article">
-            <a className="back-link" href="#gsoc">&lt;- all entries</a>
+            <a className="back-link" href="#/blog">&lt;- all entries</a>
 
             <div>
                 <h1 className="post-title">{post.title}</h1>

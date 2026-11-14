@@ -4,6 +4,7 @@ import Hero from './components/Hero'
 import Projects from './components/Projects'
 import GSoC from './components/GSoC'
 import GSoCPost from './components/GSoCPost'
+import Blog from './components/Blog'
 import About from './components/About'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
@@ -16,6 +17,7 @@ import { MapContext, useMemoryMap } from './memmap'
 // Hash routing, deliberately dependency-free and GitHub Pages safe.
 //   #home / #projects / #gsoc ...  -> sections on the main page (scroll anchors)
 //   #/gsoc/<slug>                  -> a single blog entry on its own page
+//   #/blog                         -> the list of entries
 // The leading slash is what distinguishes a route from a scroll anchor.
 function useHash() {
     const [hash, setHash] = useState(() => window.location.hash)
@@ -36,7 +38,8 @@ export default function App() {
     const hash = useHash()
     const match = hash.match(/^#\/gsoc\/([^/]+)\/?$/)
     const post = match ? findPost(match[1]) : null
-    const isPostRoute = Boolean(match)
+    const isBlog = /^#\/blogs?\/?$/.test(hash)
+    const isPostRoute = Boolean(match) || isBlog // any page that is not the main one
     const wasPost = useRef(null) // null until the first render has been handled
     const map = useMemoryMap(hash.startsWith('#/') ? hash : 'main')
 
@@ -73,8 +76,8 @@ export default function App() {
     }, [hash, isPostRoute])
 
     useEffect(() => {
-        document.title = post ? `${post.title} · edybostina` : 'edybostina'
-    }, [post])
+        document.title = post ? `${post.title} · edybostina` : isBlog ? 'the log · edybostina' : 'edybostina'
+    }, [post, isBlog])
 
     return (
         <MapContext.Provider value={map}>
@@ -83,12 +86,14 @@ export default function App() {
             <div className="page">
                 <Rail onPost={isPostRoute} />
                 <main id="main" className="content">
-                    {isPostRoute ? (
+                    {isBlog ? (
+                        <Blog />
+                    ) : isPostRoute ? (
                         post ? (
                             <GSoCPost post={post} key={post.slug} />
                         ) : (
                             <Region id="entry" name="unmapped" perm="---" tone="paper" as="article">
-                                <a className="back-link" href="#gsoc">&lt;- all entries</a>
+                                <a className="back-link" href="#/blog">&lt;- all entries</a>
                                 <h1 className="post-title">404: entry not found</h1>
                                 <div className="prose post-body">
                                     <p>No GSoC entry matches that address.</p>
@@ -98,9 +103,9 @@ export default function App() {
                     ) : (
                         <>
                             <Hero />
+                            <About />
                             <Projects />
                             <GSoC />
-                            <About />
                             <Contact />
                         </>
                     )}

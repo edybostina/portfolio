@@ -5,9 +5,9 @@ import { MapContext, hex } from '../memmap'
 // Permissions are the joke: code is r-x, the log is read-only, contact is write-only.
 const SECTIONS = [
   { id: 'home', perm: 'rw-' },
+  { id: 'about', perm: 'rw-' },
   { id: 'projects', perm: 'r-x' },
   { id: 'gsoc', perm: 'r--' },
-  { id: 'about', perm: 'rw-' },
   { id: 'contact', perm: '-w-' },
 ]
 
