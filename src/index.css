@@ -1203,7 +1203,7 @@ kbd {
 }
 
 /* the pet: a rock-shelled, five-limbed engineer who lives in the hatching
-   between regions. A 38x24 pixel sprite, two frames per activity; each part
+   between regions. A 76x48 pixel sprite, two frames per activity; each part
    lists the states it shows in, and the loop only ever sets data-s. */
 .content { position: relative; overflow-x: clip; }
 
@@ -1226,13 +1226,8 @@ kbd {
 }
 .pet[data-dir='-1'] svg { transform: scaleX(-1); }
 
-.px-s { fill: #b89268; }   /* stone */
-.px-d { fill: #7d5c3c; }   /* stone, in shade */
-.px-l { fill: #dcbf93; }   /* stone, lit */
 .px-k { fill: var(--ink); }
-.px-g { fill: #5c8f3d; }   /* moss */
 .px-v { fill: var(--violet); }
-.px-y { fill: var(--yellow); }
 
 .pet [data-p] { display: none; }
 .pet[data-s='walk0'] [data-p~='walk0'],
@@ -1247,11 +1242,6 @@ kbd {
 .pet[data-s='sleep1'] [data-p~='sleep1'],
 .pet[data-s='amaze0'] [data-p~='amaze0'],
 .pet[data-s='amaze1'] [data-p~='amaze1'] { display: inline; }
-
-/* sitting down to code, play or sleep: the shell and arms drop three pixels */
-.pet[data-s^='code'] .pet-top,
-.pet[data-s^='game'] .pet-top,
-.pet[data-s^='sleep'] .pet-top { transform: translateY(3px); }
 
 .pet-say {
   position: absolute;
