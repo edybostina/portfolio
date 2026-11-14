@@ -1,5 +1,6 @@
 import React from 'react'
 import { posts, shortDate } from '../data/gsocPosts'
+import Region from './Region'
 
 export default function GSoCPost({ post }) {
     // chronological order, so prev = older, next = newer
@@ -9,18 +10,16 @@ export default function GSoCPost({ post }) {
     const newer = idx < ordered.length - 1 ? ordered[idx + 1] : null
 
     return (
-        <article className="section post">
-            <div className="rail post-rail">
-                <a className="back-link" href="#gsoc">&lt;- all entries</a>
+        <Region id="entry" name={`gsoc/${post.slug}`} perm="r--" tone="paper" as="article">
+            <a className="back-link" href="#gsoc">&lt;- all entries</a>
+
+            <div>
+                <h1 className="post-title">{post.title}</h1>
                 <p className="post-meta">
                     <time dateTime={post.date}>{shortDate(post.date)} {post.date.slice(0, 4)}</time>
                     <span>gsoc '26</span>
                     <span>entry {idx + 1} of {ordered.length}</span>
                 </p>
-            </div>
-
-            <div className="section-body">
-                <h1 className="post-title">{post.title}</h1>
 
                 <div className="prose post-body">
                     {post.content.map((para, i) => <p key={i}>{para}</p>)}
@@ -45,6 +44,6 @@ export default function GSoCPost({ post }) {
                     </div>
                 </nav>
             </div>
-        </article>
+        </Region>
     )
 }

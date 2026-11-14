@@ -1,34 +1,12 @@
-# Portfolio (Vite + React)
+# portfolio
 
-A minimal, 2000s-style portfolio template (text + emojis, optional pictures). Built with Vite + React.
+Source for [edybostina.github.io/portfolio](https://edybostina.github.io/portfolio). Vite + React, no backend.
 
-## Quick start (local)
+```bash
+npm install
+npm run dev
+```
 
-1. Install dependencies:
-   ```bash
-   npm install
-   ```
-2. Start development server:
-   ```bash
-   npm run dev
-   ```
-3. Open [http://localhost:5173](http://localhost:5173) in your browser.
-4. Edit source files in `src/` to customize your portfolio.
+`npm run deploy` builds and publishes `dist/` to the `gh-pages` branch.
 
-## Deployment
-
-You can deploy the built site (in `dist/`) to any static hosting service. For GitHub Pages:
-
-1. Install `gh-pages` package:
-   ```bash
-   npm install --save-dev gh-pages
-   ```
-2. Add deploy scripts to `package.json`:
-   ```json
-   "predeploy": "npm run build",
-   "deploy": "gh-pages -d dist"
-   ```
-3. Run deployment:
-   ```bash
-   npm run deploy
-   ```
+Content lives in `src/data/site.js` (links, numbers, the "currently" list), `src/components/Projects.jsx` and `src/data/gsocPosts.js`.

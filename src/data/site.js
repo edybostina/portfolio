@@ -21,10 +21,10 @@ export const LINKS = {
 export const PATCHES_UPSTREAM = 24
 
 export const STATS = [
-    { n: String(PATCHES_UPSTREAM), k: 'patches upstream', href: LINKS.lore },
-    { n: '16', k: 'subsystems' },
     { n: '39k', k: 'lines of code' },
     { n: '47', k: 'syscalls' },
+    { n: String(PATCHES_UPSTREAM), k: 'patches upstream', href: LINKS.lore },
+    { n: '16', k: 'subsystems' },
     { n: '9.4/10', k: 'gpa' },
 ]
 
@@ -38,6 +38,5 @@ export const RECENT_PATCHES = [
 
 export const NOW = [
     'scheduler work in perspicua',
-    'still sending patches upstream',
     'reading about lock-free queues',
 ]

@@ -1,5 +1,7 @@
 import React from 'react'
 import { NOW } from '../data/site'
+import Region from './Region'
+import Sched from './Sched'
 
 const ATTRS = [
     { k: 'languages', v: ['C', 'C++', 'Assembly', 'Python', 'Shell', 'CMake'] },
@@ -9,15 +11,15 @@ const ATTRS = [
 
 export default function About() {
     return (
-        <section id="about" className="section">
-            <h2 className="rail">about</h2>
+        <Region id="about" perm="rw-" tone="paper">
+            <h2 className="giant">about</h2>
 
-            <div className="section-body about">
+            <div className="about">
                 <div className="prose">
                     <p>
                         I mostly write C: embedded firmware, OS kernels, and low-level systems tooling.
                         I also like working with math stuff and AI/ML.
-                        I contribute to the mainline Linux kernel and I'm a Google Summer of Code '26
+                        I've contributed to the mainline Linux kernel as a Google Summer of Code '26
                         contributor with The Linux Foundation, working on devicetree binding conversions.
                         On the side I build perspicua, a 64-bit AArch64 kernel from scratch for the
                         Raspberry Pi 4. Currently studying CS at UPB ACS.
@@ -30,24 +32,28 @@ export default function About() {
 
                 <div className="about-side">
                     <div className="now">
-                        <h3>currently</h3>
+                        <h3 className="sub-head">currently</h3>
                         <ul>
                             {NOW.map(n => <li key={n}>{n}</li>)}
                         </ul>
                     </div>
 
-                    <dl className="attrs">
-                        {ATTRS.map(a => (
-                            <div className="attr" key={a.k}>
-                                <dt>{a.k}</dt>
-                                <dd>
-                                    <ul>{a.v.map(v => <li key={v}>{v}</li>)}</ul>
-                                </dd>
-                            </div>
-                        ))}
-                    </dl>
+                    <table className="t kv">
+                        <tbody>
+                            {ATTRS.map(a => (
+                                <tr key={a.k}>
+                                    <th scope="row">{a.k}</th>
+                                    <td>
+                                        <ul className="inline">{a.v.map(v => <li key={v}>{v}</li>)}</ul>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
             </div>
-        </section>
+
+            <Sched />
+        </Region>
     )
 }
