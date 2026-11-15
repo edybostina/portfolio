@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#5a35d5" />
+    <meta name="description" content="Three animated header studies for Eduard Bostina: inside a pixel, a machine waking up, and the journey of one byte." />
+    <title>Motion studies — Eduard Bostina</title>
+  </head>
+  <body>
+    <header class="lab-header">
+      <a class="lab-title" href="./animation-lab.html">motion studies<span> / </span>edybostina</a>
+      <a class="back" href="./">portfolio <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14" /></svg></a>
+    </header>
+    <main>
+      <nav class="concepts" aria-label="Choose an animation">
+        <button class="concept active" data-scene="pixel" aria-pressed="true"><span>01</span>inside a pixel<small>geometry / rendering</small></button>
+        <button class="concept" data-scene="boot" aria-pressed="false"><span>02</span>a machine waking up<small>memory / execution</small></button>
+        <button class="concept" data-scene="byte" aria-pressed="false"><span>03</span>follow one character<small>software / signals</small></button>
+      </nav>
+      <section class="preview" aria-label="Animated portfolio header preview">
+        <canvas id="scene" aria-hidden="true"></canvas>
+        <div class="preview-top"><span>Eduard Bostina · header study</span><button id="copy-toggle" type="button" aria-pressed="false">hide text <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12s3-6 9-6 9 6 9 6-3 6-9 6-9-6-9-6Z"/><circle cx="12" cy="12" r="2.5"/></svg></button></div>
+        <div class="hero-copy">
+          <h1>Eduard<br />Bostina<span>.</span></h1>
+          <p>C developer, CS student at Politehnica Bucharest. A kernel that boots on real hardware and <span id="patches"></span> patches accepted into Linux.</p>
+          <div class="hero-actions"><a id="cv-link" class="primary" href="./public/Eduard_Bostina_CV.pdf" target="_blank" rel="noopener noreferrer">cv.pdf <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" /></svg></a><a id="email-link" href="mailto:egbostina@gmail.com">email</a></div>
+          <p class="availability">open to summer 2027 internships · eu / uk</p>
+        </div>
+        <div class="scene-caption"><span id="scene-count">01 / 05</span><p id="scene-caption">A surface, made of triangles.</p><span class="scene-format">live canvas / illustrative sequence</span></div>
+        <noscript><p class="no-script">Enable JavaScript to play these animation studies.</p></noscript>
+      </section>
+      <section class="transport" aria-label="Animation controls">
+        <div class="playback">
+          <button id="play" aria-label="Pause animation"><svg class="pause-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14" /></svg><svg class="play-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m8 5 11 7-11 7Z" /></svg><span>pause</span></button>
+          <button id="replay" aria-label="Replay animation"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10a8 8 0 1 1 1 8M4 4v6h6" /></svg></button>
+          <label class="timeline-label" for="timeline">animation progress</label><input id="timeline" type="range" min="0" max="22" step="0.01" value="0" aria-label="Animation progress" />
+          <output id="time" for="timeline">00:00 / 00:22</output>
+          <label class="speed-label" for="speed">speed</label><select id="speed" aria-label="Playback speed"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="1.5">1.5×</option></select>
+        </div>
+        <div id="chapters" class="chapters" aria-label="Jump to a chapter"></div>
+      </section>
+      <section class="scene-notes" aria-labelledby="note-title"><h2 id="note-title">From a surface to a single sample.</h2><div><p id="note-copy"></p><p class="hint" id="motion-hint">Plays once. Scrub the timeline to explore the transitions.</p></div></section>
+    </main>
+    <footer><span>three ideas, one still name.</span><span>built to choose a direction.</span></footer>
+    <script type="module" src="/src/demos/animation-lab.js"></script>
+  </body>
+</html>

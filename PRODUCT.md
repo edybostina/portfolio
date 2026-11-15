@@ -8,64 +8,67 @@ web
 
 ## Users
 
-**Primary: systems hiring teams.** Recruiters and engineers at kernel, embedded, and infrastructure companies who are screening Eduard for a summer 2027 internship in the EU or UK. Their job is to decide whether he's worth an interview. The visit succeeds when they open the CV or send an email.
+**Primary: systems hiring teams.** Engineers and recruiters at embedded, kernel, and infrastructure companies screening Eduard for a summer 2027 internship in the EU or UK. Their job is to decide whether he's worth an interview. The visit succeeds when they open the CV or send an email.
 
-**Secondary: the kernel and open-source community.** Maintainers, mentors, and GSoC peers who look him up after seeing one of his patches. They come for depth, especially the GSoC log. They should never block or slow the hiring visitor's path.
+**Secondary: people who share the interests.** Other systems programmers, kernel and open-source people, GSoC peers, classmates. They come for the projects and the GSoC log. They should never slow the hiring visitor's path.
 
 ## Product Purpose
 
-This is the personal site of Eduard Bostina, a CS student at Politehnica Bucharest (UPB ACS) who writes C close to the hardware: the Linux kernel, his own OS kernel, embedded firmware, and the tooling around them. The site exists to land a summer 2027 systems internship (EU/UK). The open-to-work status is shown on the home section.
+This is the personal site of Eduard Bostina, a CS student at Politehnica Bucharest (UPB ACS). It is about the areas he enjoys most: C and C++, embedded work, kernel work, and the math underneath (linear algebra, rendering, numerics). It exists to land a summer 2027 systems internship (EU/UK).
 
-It is also the permanent home of his Google Summer of Code '26 log. He did GSoC with The Linux Foundation, converting legacy devicetree `.txt` bindings to validated YAML schema.
+It is also the permanent home of his Google Summer of Code '26 log. He did GSoC with The Linux Foundation, converting legacy devicetree `.txt` bindings to validated YAML schema. GSoC is finished; it is one chapter of the site, not its identity.
 
 ## Positioning
 
-Four claims, all confirmed as central, listed in the order a hiring visitor should meet them:
+Listed in the order a hiring visitor should meet them:
 
-1. **Ships to mainline.** He has 22 patches merged into the mainline Linux kernel. They went through public review by real maintainers and anyone can verify them on lore.kernel.org.
-2. **Builds from scratch.** He maintains perspicua, a 64-bit UNIX-like kernel for the Raspberry Pi 4 written with three friends. It boots on real hardware to a userspace shell, with SMP, virtual memory, a VFS, and its own libc.
-3. **Learns in public.** The GSoC log is candid about mistakes and review lessons. It shows how he thinks, not just what shipped.
-4. **A real person.** He has a dry, self-deprecating sense of humour and a life outside systems work (football, guitar, friends). He comes across as someone you'd want on the team, not just a CV.
+1. **Writes C and C++ close to the hardware.** Kernels, bare metal, emulation, SIMD. This is the through-line; everything else is an instance of it.
+2. **Builds from scratch.** perspicua, a 64-bit UNIX-like kernel for the Raspberry Pi 4 written with three friends, boots on real hardware to a userspace shell. The rasterizer draws without a GPU. matrix-lib does its own linear algebra.
+3. **Likes the math.** Linear algebra, 3D transforms, numerics, a bit of ML. It shows up in the projects rather than as a claim.
+4. **Has shipped to mainline.** 24 patches accepted into the Linux kernel through public maintainer review, from the GSoC summer. A fact that stays true and stays checkable. It is evidence, not the headline: he has not sent patches since autumn 2026, so nothing may present this as ongoing.
+5. **Learns in public.** The GSoC log is candid about mistakes and review lessons.
+6. **A real person.** Dry, self-deprecating humour and a life outside systems work (football, guitar, friends).
 
-What another student portfolio can't honestly copy is that every one of these claims can be checked outside the site: patches on lore, code on GitHub, and a kernel that boots on a physical board.
+What another student portfolio can't honestly copy: the claims can be checked outside the site. Code on GitHub, patches on lore, a kernel that boots on a physical board.
 
 ## Operating Context
 
-- Visitors check claims by following links off the site: lore.kernel.org patch history, GitHub repos (the `perspicua` org and `edybostina`), and the CV PDF. These outbound links are part of the product, not decoration.
-- The subject matter is kernel development and its culture. Terms like `dt_binding_check`, `dtbs_check`, v2/v3 revisions, Reviewed-by tags, and maintainer review on mailing lists appear in the copy. The secondary audience reads these fluently. The primary audience may only skim them.
-- Structure: one page with the sections home, projects, gsoc, about, and contact, plus a separate page for each GSoC entry at `#/gsoc/<slug>`.
-- On the first visit of a browser session, the hero plays a short intro in which the real perspicua boot capture prints in; it never replays that session and never blocks the page. The site has keyboard shortcuts (`?`, `g h`, `g p`, `g g`, `g a`, `g c`), all of which are also reachable by clicking.
-- One theme, dark. Light mode and the theme toggle were removed on purpose (2026-09-27).
+- Visitors check claims by following links off the site: GitHub repos (the `perspicua` org and `edybostina`), lore.kernel.org patch history, and the CV PDF. These outbound links are part of the product.
+- The subject matter is low-level programming and its culture: datasheets, registers, device trees, review on mailing lists, linear algebra. The secondary audience reads the jargon fluently. The primary audience may only skim it.
+- Structure: one page with the sections home, about, projects, gsoc, and contact. The GSoC log has its own page at `#/blog`, and each entry its own at `#/gsoc/<slug>`.
 
 ## Capabilities and Constraints
 
-- **Static build on GitHub Pages (confirmed).** Vite + React 19, deployed with `npm run deploy` to the `gh-pages` branch and served at https://edybostina.github.io/portfolio with `base: './'`. No backend, no analytics, no heavy dependencies.
-- **Hash routing, and GSoC URLs are permanent (confirmed).** `#section` is a scroll anchor. `#/gsoc/<slug>` is an entry page. The ten existing entry slugs must keep resolving. New entries add to the archive and never replace it.
-- **Where content lives.** Projects are in `src/components/Projects.jsx`. Links, headline numbers, the latest patches and the "currently" list are in `src/data/site.js`. GSoC entries are in `src/data/gsocPosts.js`. The patch count is defined once, as `PATCHES_MERGED` in `src/data/site.js`, and everything that shows it reads from there.
-- **Existing behaviour found in code (not separately confirmed).** Keyboard navigation is strictly additive, so everything is reachable by clicking. All motion respects `prefers-reduced-motion`.
-- **Time-bound copy.** The open-to-work badge ("summer 2027 internships · eu / uk") and the "currently" and "recent upstream" lists go stale. Keep them current rather than letting them drift.
-- **Undecided.** What the site becomes once an internship is secured has not been decided.
+- **Static build on GitHub Pages.** Vite + React 19, deployed with `npm run deploy` to the `gh-pages` branch and served at https://edybostina.github.io/portfolio with `base: './'`. No backend, no analytics, no heavy dependencies.
+- **Hash routing, and GSoC URLs are permanent.** `#section` is a scroll anchor. `#/gsoc/<slug>` is an entry page. The ten existing entry slugs must keep resolving. New entries add to the archive and never replace it.
+- **Where content lives.** Projects are in `src/components/Projects.jsx`. Links, headline numbers, the latest patches and the "currently" list are in `src/data/site.js`. GSoC entries are in `src/data/gsocPosts.js`. The patch count is defined once, as `PATCHES_UPSTREAM` in `src/data/site.js`.
+- **The copy stays (owner's instruction, 2026-11-14).** The existing text remains about the same: no major rewrites, no new claims. Small corrections for facts that have gone stale are fine. The design may change freely; there is no fixed visual rule, theme included.
+- **All motion respects `prefers-reduced-motion`.**
+- **Time-bound copy.** The open-to-work line ("summer 2027 internships · eu / uk"), the "currently" list and the patch count go stale. Keep them current rather than letting them drift.
+- **Undecided.** What the site becomes once an internship is secured.
 
 ## Brand Commitments
 
 - **Name and handle.** Eduard Bostina, known as `edybostina` everywhere (site title, GitHub, LinkedIn, Instagram). Project names are lowercase: perspicua, aegis, rasterizer, matrix-lib, mos6502.
-- **Voice (confirmed, binding).** Mostly lowercase, terse, dry, and a little self-deprecating ("not a web dev, bear with me"). GSoC entries are plain first person and honest about getting things wrong. Future copy stays in this voice.
+- **Voice (binding).** Mostly lowercase, terse, dry, and a little self-deprecating ("not a web dev, bear with me"). GSoC entries are plain first person and honest about getting things wrong.
 
 ## Evidence on Hand
 
 - `public/Eduard_Bostina_CV.pdf`: the CV, and the primary conversion target.
-- `public/perspicua-boot.jpg`: a capture of perspicua's console after booting on a Raspberry Pi 4: the kernel log through to userspace, then kfetch reporting "perspicua kernel v0.1". This is the only boot evidence on hand.
-- `public/pfp2.jpg`: not a photo of Eduard (it's a dog in a cowboy hat) and unused. No portrait of him is on hand.
-- lore.kernel.org patch history (search on `egbostina@gmail.com`): the source for the 22 merged patches.
-- GitHub: `perspicua/perspicua` (maintainer, 463 commits), `edybostina/aegis` (5 tagged releases with CI), `edybostina/rasterizer` (5.9k triangles at 1920×1080 in real time, 2.6× from tile-based multithreading), `edybostina/matrix-lib-cpp` (4–8× from SIMD on large matrices), `edybostina/mos6502` (work in progress).
-- Headline stats: 22 patches upstream, 16 subsystems, 35k lines of kernel code, 46 syscalls, 9.4/10 GPA. A code comment commits that every one is checkable.
-- The GSoC '26 log: ten entries, 2026-05-20 to 2026-08-18, in `src/data/gsocPosts.js`. It includes a quoted public review from a kernel maintainer.
-- **Absences that future work must not fill with invented content:** no testimonials, recommendations, or mentor endorsements; no employer or internship history; no press. Patches **sent** and patches **merged** are different counts. The GSoC log cites roughly 30 sent across 19 subsystems, while the home section cites 22 merged and the stats show 16 subsystems. Keep each number tied to what it actually counts.
+- `public/perspicua-boot.jpg`: a capture of perspicua's console after booting on a Raspberry Pi 4: the kernel log through to userspace, then kfetch. The only boot evidence on hand. No photo of the physical board.
+- `public/pfp2.jpg`: not a photo of Eduard and unused. No portrait is on hand.
+- GitHub: `perspicua/perspicua` (maintainer, 500+ commits), `edybostina/aegis` (five tagged releases with CI), `edybostina/rasterizer` (5.9k triangles at 1920×1080 in real time, 2.6× from tile-based multithreading; the repo has a screenshot and a demo gif), `edybostina/matrix-lib-cpp` (4–8× from SIMD on large matrices), `edybostina/mos6502` (work in progress).
+- Not on the site but real: `edybostina/tinf`, a zero-dependency neural-network inference engine for microcontrollers. The one explicitly embedded-plus-math project; adding it is the owner's call.
+- lore.kernel.org patch history (search on `egbostina@gmail.com`): the source for the 24 patches accepted (mainline plus linux-next, checked 30 Sep 2026).
+- Headline numbers: 24 patches upstream, 16 subsystems, 39k lines of code, 47 syscalls, 9.4/10 GPA.
+- The GSoC '26 log: ten entries, 2026-05-20 to 2026-08-18, in `src/data/gsocPosts.js`.
+- **Absences that future work must not fill with invented content:** no testimonials, recommendations, or mentor endorsements; no employer or internship history; no press. Patches **sent** and patches **accepted** are different counts; keep each number tied to what it counts.
 
 ## Product Principles
 
-1. **Proof over adjectives.** Every claim either links to a public source or can be checked against one. Never round up, never invent, never let "sent" pass for "merged".
-2. **The hiring visitor's path comes first.** A screener should get who he is, what he builds, and the proof, with the CV or email one step away. Depth for the community is always available but never in the way.
-3. **Show the work, mistakes included.** The candid learning in the GSoC log is a strength. Don't polish it into marketing.
-4. **A person, not a résumé.** Personality and humour stay, in the confirmed voice.
-5. **Static, light, durable.** No backend, no tracking, no heavy dependencies, and published URLs never break.
+1. **Proof over adjectives.** Every claim either links to a public source or can be checked against one. Never round up, never invent.
+2. **The hiring visitor's path comes first.** Who he is, what he builds, the proof, with the CV or email one step away.
+3. **The interests lead, not the résumé line.** C/C++, embedded, kernel, math. The work he would choose to do is what the page is about.
+4. **Show the work, mistakes included.** Don't polish the GSoC log into marketing.
+5. **A person, not a résumé.** Personality and humour stay, in the confirmed voice.
+6. **Static, light, durable.** No backend, no tracking, no heavy dependencies, and published URLs never break.
