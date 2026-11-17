@@ -18,7 +18,7 @@ export default function Hero() {
                 <p className="hero-status">open to summer 2027 internships · eu / uk</p>
                 <h1 className="hero-name">Eduard<br />Bostina</h1>
                 <p className="hero-sub">
-                    C developer, CS student at Politehnica Bucharest.{' '}
+                    C/C++ developer, CS student at Politehnica Bucharest.{' '}
                     <a href="#projects">A kernel</a> that boots on real hardware and{' '}
                     <a href={LINKS.lore} target="_blank" rel="noopener noreferrer">
                         {PATCHES_UPSTREAM} patches accepted into Linux
@@ -33,18 +33,20 @@ export default function Hero() {
                 </div>
             </div>
 
-            <ul className="readout" aria-label="In numbers">
-                {STATS.map(s => (
-                    <li key={s.k}>
-                        {s.href ? (
-                            <a className="readout-n" href={s.href} target="_blank" rel="noopener noreferrer">{s.n}</a>
-                        ) : (
-                            <span className="readout-n">{s.n}</span>
-                        )}{' '}
-                        {s.k}
-                    </li>
+            <dl className="readout" aria-label="In numbers">
+                {STATS.map(g => (
+                    <div className="readout-group" key={g.label}>
+                        <dt>
+                            {g.href ? (
+                                <a href={g.href} target="_blank" rel="noopener noreferrer">{g.label}</a>
+                            ) : g.label}
+                        </dt>
+                        {g.items.map(s => (
+                            <dd key={s.k}><span className="readout-n">{s.n}</span> {s.k}</dd>
+                        ))}
+                    </div>
                 ))}
-            </ul>
+            </dl>
 
             <dialog
                 ref={dialog}

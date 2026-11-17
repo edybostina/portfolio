@@ -133,7 +133,6 @@ code, kbd { font-family: var(--mono); }
 /* links inside running text: the text stays, the underline carries the mark */
 .prose a,
 .hero-sub a,
-.readout-n[href],
 .mail-addr {
   text-decoration: underline;
   text-decoration-color: var(--mark);
@@ -142,7 +141,6 @@ code, kbd { font-family: var(--mono); }
 }
 .prose a:hover,
 .hero-sub a:hover,
-.readout-n[href]:hover,
 .mail-addr:hover { text-decoration-thickness: 0.18em; }
 
 /* links and buttons that read as a plain word with an arrow */
@@ -514,8 +512,20 @@ kbd {
   font-variant-numeric: tabular-nums lining-nums;
   color: var(--fg2);
 }
-.readout li { padding-right: 1.5rem; margin-right: 1.5rem; border-right: 1px dashed var(--line); }
-.readout li:last-child { padding-right: 0; margin-right: 0; border-right: 0; }
+/* each group names what it counts: perspicua, linux, upb */
+.readout-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.2rem 1rem;
+  padding-right: 1.75rem;
+  margin-right: 1.75rem;
+  border-right: 1px dashed var(--line);
+}
+.readout-group:last-child { padding-right: 0; margin-right: 0; border-right: 0; }
+.readout dt { font: 400 0.75rem/1.4 var(--mono); color: var(--fg2); }
+.readout dt a { text-decoration: underline; text-decoration-color: var(--mark); text-underline-offset: 0.2em; }
+.readout dt a:hover { color: var(--fg); }
 .readout-n { font-weight: 800; color: var(--fg); }
 
 /* ── figures ──────────────────────────────────────────────── */
@@ -1027,8 +1037,11 @@ kbd {
   .wire-bits { display: none; }
   .wire-hex { font-size: 0.5625rem; padding-block: 0.35rem 0.25rem; overflow: hidden; }
 
-  .readout { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.4rem 1rem; }
-  .readout li { padding: 0; margin: 0; border: 0; }
+  /* one row per group: label on the left, its numbers stacked beside it */
+  .readout { display: grid; gap: 0.6rem; }
+  .readout-group { display: grid; grid-template-columns: 5.5rem minmax(0, 1fr); gap: 0.1rem 0; padding: 0; margin: 0; border: 0; }
+  .readout dt { grid-row: span 2; }
+  .readout dd { grid-column: 2; }
 
   .about-side { grid-template-columns: minmax(0, 1fr); }
 

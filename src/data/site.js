@@ -20,12 +20,19 @@ export const LINKS = {
 // Mainline plus linux-next (accepted, waiting for the merge window). Checked 30 Sep 2026.
 export const PATCHES_UPSTREAM = 24
 
+// Grouped by what they count, so no number borrows another's subject.
 export const STATS = [
-    { n: '39k', k: 'lines of code' },
-    { n: '47', k: 'syscalls' },
-    { n: String(PATCHES_UPSTREAM), k: 'patches upstream', href: LINKS.lore },
-    { n: '16', k: 'subsystems' },
-    { n: '9.4/10', k: 'gpa' },
+    { label: 'perspicua', href: 'https://github.com/perspicua/perspicua', items: [
+        { n: '39k', k: 'lines of code' },
+        { n: '47', k: 'syscalls' },
+    ] },
+    { label: 'linux', href: LINKS.lore, items: [
+        { n: String(PATCHES_UPSTREAM), k: 'patches accepted' },
+        { n: '16', k: 'subsystems' },
+    ] },
+    { label: 'upb', items: [
+        { n: '9.4/10', k: 'gpa' },
+    ] },
 ]
 
 // Latest upstream patches, newest first. Subjects exactly as sent.
